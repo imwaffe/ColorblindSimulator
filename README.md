@@ -1,4 +1,4 @@
-# Colorblind Colorblind.Simulator
+# Colorblind Simulator
 Basic graphical interface that allows the user to load images
 and simulate color vision deficiencies.
 
