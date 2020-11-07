@@ -13,3 +13,4 @@ out/production/
 *.zip
 *.tar.gz
 *.rar
+test_results

@@ -78,7 +78,7 @@ public class Simulator {
      * @normal The image with normal vision.
      * @return The image with simulated color vision impairment.
      */
-    protected BufferedImage filter(BufferedImage normal) {
+    public BufferedImage filter(BufferedImage normal) {
         return op.filter(normal, null);
     }
 

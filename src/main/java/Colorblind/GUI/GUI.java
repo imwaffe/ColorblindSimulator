@@ -1,5 +1,6 @@
-package Colorblind;
+package Colorblind.GUI;
 
+import Colorblind.Simulator;
 import ImageTools.ImageScaler;
 import ImageTools.ImagesList;
 
@@ -12,8 +13,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.TimerTask;
 
-public class GUI extends JPanel {
+public class GUI extends JPanel{
     private static final String TITLE = "Colorblind Simulator";
 
     private final JFrame frame = new JFrame(TITLE);
@@ -24,6 +26,7 @@ public class GUI extends JPanel {
     private static final JMenuItem menuFilterGray = new JMenuItem("Greyscale");
     private final JMenuItem menuFileOpen = new JMenuItem("Open");
     private final JMenuItem menuFileSave = new JMenuItem("Save as ...");
+    private final JMenuItem menuTestRun = new JMenuItem("Run test");
 
     public enum FilterType {
         PROTAN (" [ PROTANOPY ] ", menuFilterProtan),
@@ -47,6 +50,7 @@ public class GUI extends JPanel {
         JMenuBar bar = new JMenuBar();
         JMenu menuFile = new JMenu("File");
         JMenu menuFilter = new JMenu("Simulate");
+        JMenu menuTest = new JMenu("Test");
 
         menuFile.add(menuFileOpen);
         //menuFile.add(menuFileSave);
@@ -57,8 +61,11 @@ public class GUI extends JPanel {
         menuFilter.add(menuFilterTritan);
         menuFilter.add(menuFilterGray);
 
+        menuTest.add(menuTestRun);
+
         bar.add(menuFile);
         bar.add(menuFilter);
+        bar.add(menuTest);
 
         frame.getContentPane().add(BorderLayout.NORTH, bar);
         frame.setVisible(true);
@@ -77,6 +84,12 @@ public class GUI extends JPanel {
         });
     }
 
+    public void addTestListener(Runnable action){
+        menuTestRun.addActionListener(e -> {
+            action.run();
+        });
+    }
+
     public static File[] fileLoader(JPanel parent){
         JFileChooser fileChooser = new JFileChooser();
         FileFilter filesFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
@@ -87,7 +100,7 @@ public class GUI extends JPanel {
         return fileChooser.getSelectedFiles();
     }
 
-    public void drawPicture(BufferedImage img){
+    public synchronized void drawPicture(BufferedImage img){
         img = ImageScaler.resizeImage(img,new Dimension(1000,1000));
         try{
             frame.getContentPane().remove(1);
@@ -97,7 +110,7 @@ public class GUI extends JPanel {
         frame.revalidate();
         frame.repaint();
     }
-    public void drawPicture(BufferedImage img, Simulator simulator){
+    public synchronized void drawPicture(BufferedImage img, Simulator simulator){
         drawPicture(simulator.filter(img));
     }
 

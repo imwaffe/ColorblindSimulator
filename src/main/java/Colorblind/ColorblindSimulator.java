@@ -1,5 +1,7 @@
 package Colorblind;
 
+import Colorblind.Controller.RunTest;
+import Colorblind.GUI.GUI;
 import ImageTools.ImagesList;
 
 import javax.swing.*;
@@ -7,7 +9,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.concurrent.atomic.AtomicReference;
 
 enum Simulation {
@@ -16,22 +17,32 @@ enum Simulation {
 
 public class ColorblindSimulator {
 
+    public static class DrawThread extends Thread{
+        private GUI gui;
+        private BufferedImage img;
+
+        public DrawThread(BufferedImage img, GUI gui){
+            this.img = img;
+            this.gui = gui;
+        }
+
+        @Override
+        public void run() {
+            gui.drawPicture(img);
+        }
+    }
+
     private static final int    LEFT_KEY = 37;
     private static final int    RIGHT_KEY = 39;
 
-    private BufferedImage inputImg;
-    public void setInputImg(BufferedImage inputImg){
-        this.inputImg = inputImg;
-    }
-
-    public static void main(String[] args) throws IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
+    public static void main(String[] args) throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         GUI gui = new GUI();
         Simulator simulator = new Simulator();
         ImagesList imgList = new ImagesList();
 
-        AtomicReference<BufferedImage> inputImg = new AtomicReference<BufferedImage>();
-        AtomicReference<BufferedImage> filteredImg = new AtomicReference<BufferedImage>();
+        AtomicReference<BufferedImage> inputImg = new AtomicReference<>();
+        AtomicReference<BufferedImage> filteredImg = new AtomicReference<>();
 
         gui.addOpenFileListener(() -> {
             File[] ff = GUI.fileLoader(gui);
@@ -102,6 +113,14 @@ public class ColorblindSimulator {
                         gui.drawPicture(filteredImg.get());
                 }
             }
+        });
+
+        gui.addTestListener(() -> {
+            JOptionPane.showMessageDialog(gui.getFrame(),
+                    "After clicking OK the test will start.\nCount how many times the colors change",
+                    "Test start",
+                    JOptionPane.INFORMATION_MESSAGE);
+            RunTest.runTest(gui, simulator, imgList);
         });
 
     }

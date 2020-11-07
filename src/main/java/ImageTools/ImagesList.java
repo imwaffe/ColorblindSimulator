@@ -18,6 +18,7 @@ import java.util.ListIterator;
 
 public class ImagesList implements ListIterator {
     private ListIterator<File> files = new ArrayList<File>().listIterator();
+    private String currentFileName;
 
     public ImagesList(){};
     public ImagesList(File[] ff){
@@ -36,7 +37,9 @@ public class ImagesList implements ListIterator {
     @Override
     public Object next() {
         try {
-            return toBuffImg(files.next());
+            File ff = files.next();
+            currentFileName = ff.getName();
+            return toBuffImg(ff);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -51,7 +54,9 @@ public class ImagesList implements ListIterator {
     @Override
     public Object previous() {
         try {
-            return toBuffImg(files.previous());
+            File ff = files.previous();
+            currentFileName = ff.getName();
+            return toBuffImg(ff);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -100,5 +105,14 @@ public class ImagesList implements ListIterator {
         g.drawImage(in, 0, 0, in.getWidth(), in.getHeight(), null);
         g.dispose();
         return loadedImg;
+    }
+
+    public String getCurrentFileName(){
+        return currentFileName;
+    }
+
+    public void reset(){
+        while(this.hasPrevious())
+            this.previous();
     }
 }

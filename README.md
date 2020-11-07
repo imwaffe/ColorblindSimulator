@@ -1,6 +1,7 @@
 # Colorblind Simulator
 Basic graphical interface that allows the user to load images
-and simulate color vision deficiencies.
+and simulate color vision deficiencies.<br>
+This particular version allows execution of automated perceptual tests.
 
 ## Usage
 The user loads single or multiple images and can select the desired
@@ -8,6 +9,17 @@ color deficiency from the "Filter" menu.<br>
 By pressing "X" key on the keyboard the user can switch between normal
 and filtered image, the LEFT and RIGHT keys are used to move between
 the loaded images.
+
+### Test
+The user loads a series of images and select the color deficiency for which
+he wishes to execute the test.<br>
+By clicking on Test>Run Test the test will start. The test consists on
+showing the original and filtered image, the user is asked to count how many
+times the image changes.<br>
+The filtered and unfiltered images are shown alternatively a random number
+of times (between 10 and 20) and at random intervals (between 500 and 1000ms),
+then the user is asked to enter the number of times the image changed.<br>
+At the end of the test a CSV file is created in test_results directory.
 
 ## Credits and license
 This software makes use of the Simulator class extracted from the
