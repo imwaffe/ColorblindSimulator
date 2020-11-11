@@ -92,6 +92,7 @@ public class GUI extends JPanel{
 
     public static File[] fileLoader(JPanel parent){
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File("."));
         FileFilter filesFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
         fileChooser.setAcceptAllFileFilterUsed(false);
         fileChooser.setFileFilter(filesFilter);

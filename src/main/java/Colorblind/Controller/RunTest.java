@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 class ChangePicture extends Thread {
     private static final int DURATION_MIN = 500;
-    private static final int DURATION_MAX = 1000;
+    private static final int DURATION_MAX = 2500;
     private static final int RUNS_MIN = 10;
     private static final int RUNS_MAX = 20;
 
