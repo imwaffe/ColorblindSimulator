@@ -17,7 +17,7 @@ By clicking on Test>Run Test the test will start. The test consists on
 showing the original and filtered image, the user is asked to count how many
 times the image changes.<br>
 The filtered and unfiltered images are shown alternatively a random number
-of times (between 10 and 20) and at random intervals (between 500 and 1000ms),
+of times (between 10 and 20) and at random intervals (between 500 and 2500ms),
 then the user is asked to enter the number of times the image changed.<br>
 At the end of the test a CSV file is created in test_results directory.
 
